@@ -17,7 +17,7 @@ def load_id_map(G):
 def load_class_map(G):
 	class_map = {}
 	nodes = G.nodes()
-	pickle_in = open('C:/Users/cwxxcheun/Desktop/Other/github/cmsc5721-project/sandp500_data/sector_dict.pickle', "rb")
+	pickle_in = open('/Users/dennis199441/Documents/GitHub/cmsc5721-project/sandp500_data/sector_dict.pickle', "rb")
 	sector_dict = pickle.load(pickle_in)
 
 	sector_mapping = {}
@@ -167,6 +167,6 @@ if __name__ == "__main__":
 			G = G.subgraph(nodes)
 			pairs = run_random_walks(G, nodes)
 			with open(out_file, "w") as fp:
-				fp.write("/n".join([str(p[0]) + "/t" + str(p[1]) for p in pairs]))
+				fp.write("\n".join([str(p[0]) + "\t" + str(p[1]) for p in pairs]))
 	
 

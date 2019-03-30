@@ -117,7 +117,7 @@ def save_val_embeddings(sess, model, minibatch_iter, size, out_dir, mod=""):
     print("save path: ", model_name)
     np.save(model_name + ".npy",  val_embeddings)
     with open(model_name + ".txt", "w") as fp:
-        fp.write("/n".join(map(str,nodes)))
+        fp.write("\n".join(map(str,nodes)))
 
 def construct_placeholders():
     # Define placeholders
@@ -326,9 +326,9 @@ def train(filename, train_data, test_data=None):
 
         if FLAGS.model == "n2v":
             # stopping the gradient for the already trained nodes
-            train_ids = tf.constant([[id_map[n]] for n in G.nodes_iter() if not G.node[n]['val'] and not G.node[n]['test']],
+            train_ids = tf.constant([[id_map[n]] for n in G.nodes() if not G.node[n]['val'] and not G.node[n]['test']],
                     dtype=tf.int32)
-            test_ids = tf.constant([[id_map[n]] for n in G.nodes_iter() if G.node[n]['val'] or G.node[n]['test']], 
+            test_ids = tf.constant([[id_map[n]] for n in G.nodes() if G.node[n]['val'] or G.node[n]['test']], 
                     dtype=tf.int32)
             update_nodes = tf.nn.embedding_lookup(model.context_embeds, tf.squeeze(test_ids))
             no_update_nodes = tf.nn.embedding_lookup(model.context_embeds,tf.squeeze(train_ids))
@@ -338,8 +338,8 @@ def train(filename, train_data, test_data=None):
             sess.run(model.context_embeds)
 
             # run random walks
-            from graphsage.utils import run_random_walks
-            nodes = [n for n in G.nodes_iter() if G.node[n]["val"] or G.node[n]["test"]]
+            from graphsage.custom_utils import run_random_walks
+            nodes = [n for n in G.nodes() if G.node[n]["val"] or G.node[n]["test"]]
             start_time = time.time()
             pairs = run_random_walks(G, nodes, num_walks=50)
             walk_time = time.time() - start_time
@@ -402,5 +402,5 @@ if __name__ == '__main__':
 
 
 '''
-python -m graphsage.custom_unsupervised_train --custom_data_folder C:/Users/cwxxcheun/Desktop/Other/github/cmsc5721-project/network_data/daily_net/metadata_stocknet_timescale_250threshold_0.6/ --model graphsage_mean --max_total_steps 1000 --validate_iter 10
+python3 -m graphsage.custom_unsupervised_train --custom_data_folder '/Users/dennis199441/Documents/GitHub/cmsc5721-project/network_data/daily_net/metadata_stocknet_timescale_250threshold_0.6/' --model graphsage_mean --max_total_steps 1000 --validate_iter 10
 '''
