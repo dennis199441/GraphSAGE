@@ -17,7 +17,7 @@ def load_id_map(G):
 def load_class_map(G):
 	class_map = {}
 	nodes = G.nodes()
-	pickle_in = open('~/cmsc5721-project/sandp500_data/sector_dict.pickle', "rb")
+	pickle_in = open('/home/dennis199441/cmsc5721-project/sandp500_data/sector_dict.pickle', "rb")
 	sector_dict = pickle.load(pickle_in)
 
 	sector_mapping = {}
@@ -89,7 +89,6 @@ def load_feats(G):
 	return np.array(feat_list)
 
 def custom_load_data(filename, walksname, normalize=True):
-	# filename = '/Users/dennis199441/Documents/GitHub/cmsc5721-project/network_data/daily_net/metadata_stocknet_timescale_250threshold_0.6/stocknet_20180110_20190109.pickle'
 	pickle_in = open(filename, "rb")
 	G = pickle.load(pickle_in)
 	if isinstance(list(G.nodes())[0], int):
@@ -155,7 +154,7 @@ def run_random_walks(G, nodes, num_walks=N_WALKS):
 	return pairs
 
 if __name__ == "__main__":
-	path = '~/cmsc5721-project/network_data/daily_net/metadata_stocknet_timescale_250threshold_0.6/'
+	path = '/home/dennis199441/cmsc5721-project/network_data/daily_net/metadata_stocknet_timescale_250threshold_0.6/'
 	list_dir = os.listdir(path)
 
 	for file in list_dir:
